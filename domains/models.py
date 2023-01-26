@@ -33,3 +33,25 @@ class Contact(TimeStampedModel):
 
     def __str__(self):
         return self.user.get_username()
+
+
+class Domain(TimeStampedModel):
+    contact = models.ForeignKey(Contact, on_delete=models.PROTECT, related_name='domain')
+    
+    
+
+class ContactPlan(TimeStampedModel):
+    title = models.CharField(max_length=200)
+    is_recommended = models.BooleanField(default=False)
+    price = models.CharField(max_length=15)
+    discount = models.PositiveSmallIntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+    
+class ContactPlanFeature(TimeStampedModel):
+    name = models.CharField(max_length=200)
+
+
+class PaymentHistory(TimeStampedModel):
+    pass

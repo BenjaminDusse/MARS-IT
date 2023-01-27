@@ -1,0 +1,27 @@
+from aiogram.dispatcher.filters.state import State, StatesGroup
+
+class UserState(StatesGroup):
+    language = State()
+    start = State()
+    language = State()
+    contact = State()
+    verification = State()
+    main_menu = State()
+    personal = State()
+    personal_deposit_source = State()
+    personal_deposit_currency = State()
+    personal_deposit_bank = State()
+    personal_deposit_mobile = State()
+    personal_credit_type = State() 
+    personal_credit = State()
+    personal_card_currency = State()
+    personal_card = State()
+    corporate = State()
+    entrepreneur = State()
+    regions = State()
+    branches = State()
+    settings = State()
+    change_language = State()
+    contact_us = State()
+    write_consultant = State()
+    

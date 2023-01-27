@@ -13,5 +13,5 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **kwargs):
-        executor.start_polling(dp)
+        executor.start_polling(dp, skip_updates=True)
 

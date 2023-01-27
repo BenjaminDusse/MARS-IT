@@ -46,6 +46,7 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 
 @dp.message_handler(commands=['start'])
 async def start(message):
+    send_welcome(message)
     await check_user(message.chat.id, message.from_user.id)
 
 
@@ -107,22 +108,22 @@ async def language_handler(message: types.Message, state: FSMContext):
 
 # # Methods
 
-async def check_user(chat_id, tg_user_id):
-    user = await db_utils.get_user(chat_id)
+def check_user(chat_id, tg_user_id):
+    user = db_utils.get_user(chat_id)
     if not user:
-        await db_utils.create_user(chat_id, tg_user_id)
+        db_utils.create_user(chat_id, tg_user_id)
         send_welcome(chat_id)
         ask_language(chat_id)
     elif not user.lang:
         ask_language(chat_id)
     elif not user.phone_number:
-        await ask_contact(chat_id, user.lang)
+        ask_contact(chat_id, user.lang)
     elif not user.is_verified:
-        await send_notify(chat_id, user.phone_number, user.lang)
+        send_notify(chat_id, user.phone_number, user.lang)
     elif user.is_verified:
-        await send_main_menu(user)
+        send_main_menu(user)
     else:
-        await send_error(chat_id)
+        send_error(chat_id)
 
 
 # Send message

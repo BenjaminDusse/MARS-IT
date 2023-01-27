@@ -22,6 +22,8 @@ class Command(BaseCommand):
             User,
             number,
             {
+                "tg_user_id": lambda x: random.randrange(100000000, 999999999),
+                "chat_id": lambda x: random.randrange(100000000, 999999999),
                 "is_staff": False,
                 "is_superuser": False
             },

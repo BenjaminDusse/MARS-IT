@@ -16,9 +16,7 @@ class Contact(TimeStampedModel):
         (UZ, 'uz'),
         (RU, 'ru'),
     )
-    
-    tg_user_id = models.PositiveBigIntegerField(unique=True, null=True)
-    chat_id = models.PositiveBigIntegerField(unique=True, null=True)
+
     phone_number = models.CharField(max_length=25, null=True, blank=True)
     lang = models.CharField(max_length=3, choices=LANGUAGE_CHOICE, null=True, blank=True)
     is_verified = models.BooleanField(default=False)

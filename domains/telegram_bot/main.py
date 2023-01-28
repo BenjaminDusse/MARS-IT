@@ -57,7 +57,7 @@ print("Working")
 @dp.message_handler(state=UserState.language)
 async def language_handler(message: types.Message, state: FSMContext):
     await ask_language(message.chat.id)
-    await state.finish()
+    
     # user_id = message.from_user.id
     # user = await db_utils.get_user(user_id)
     # if not user:
@@ -124,6 +124,7 @@ def check_user(chat_id, tg_user_id):
         send_main_menu(user)
     else:
         send_error(chat_id)
+
 
 
 # Send message

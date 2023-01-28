@@ -22,7 +22,7 @@ class Contact(TimeStampedModel):
     is_verified = models.BooleanField(default=False)
     code = models.CharField(max_length=12, null=True, blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
-
+    contact_plan = models.OneToOneField('ContactPlan', on_delete=models.CASCADE, related_name='contact')
 
 
     def __str__(self):
@@ -30,8 +30,8 @@ class Contact(TimeStampedModel):
 
 
 class Domain(TimeStampedModel):
+    title = models.CharField(max_length=100)
     contact = models.ForeignKey(Contact, on_delete=models.PROTECT, related_name='domain')
-    
     
 
 class ContactPlan(TimeStampedModel):

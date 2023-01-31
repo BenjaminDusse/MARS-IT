@@ -1,6 +1,6 @@
 import logging
 import asyncio
-
+from domains.telegram_bot import states
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
@@ -15,9 +15,9 @@ from domains.telegram_bot.states import UserState
 BOT_TOKEN = "1878898481:AAHBhPKTn63PV5fCAGN4O8Ubuu7lLiJse7Q"
 logging.basicConfig(level=logging.DEBUG)
 
+
 bot = Bot(BOT_TOKEN, parse_mode=None)
 dp = Dispatcher(bot, storage=MemoryStorage())
-
 
 # class UserState:
     # start = 0
@@ -45,19 +45,22 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 
 
 @dp.message_handler(commands=['start'])
-async def start(message):
-    send_welcome(message)
-    await check_user(message.chat.id, message.from_user.id)
+async def on_start(message):
+    await bot.send_message(message.chat.id, const.WELCOME_MESSAGE, reply_markup=utils.get_buttons(const.LIST_LANG))
+    await states.UserState.language.set()
+    # await check_user(message, const.WELCOME_MESSAGE)
 
 
 print("Working")
 # Bot Handlers
 
+
 # register
 @dp.message_handler(state=UserState.language)
 async def language_handler(message: types.Message, state: FSMContext):
-    await ask_language(message.chat.id)
-    
+    if message.text == const.UZBEK:
+        await get_phone_number(message.chat.id)
+
     # user_id = message.from_user.id
     # user = await db_utils.get_user(user_id)
     # if not user:
@@ -108,22 +111,22 @@ async def language_handler(message: types.Message, state: FSMContext):
 
 # # Methods
 
-def check_user(chat_id, tg_user_id):
-    user = db_utils.get_user(chat_id)
-    if not user:
-        db_utils.create_user(chat_id, tg_user_id)
-        send_welcome(chat_id)
-        ask_language(chat_id)
-    elif not user.lang:
-        ask_language(chat_id)
-    elif not user.phone_number:
-        ask_contact(chat_id, user.lang)
-    elif not user.is_verified:
-        send_notify(chat_id, user.phone_number, user.lang)
-    elif user.is_verified:
-        send_main_menu(user)
-    else:
-        send_error(chat_id)
+# async def check_user(chat_id, tg_user_id):
+#     user = await db_utils.get_user(chat_id)
+#     if not user:
+#         await db_utils.create_user(chat_id, tg_user_id)
+#         await send_welcome(chat_id)
+#         await ask_language(chat_id)
+#     elif not user.lang:
+#         await ask_language(chat_id)
+#     elif not user.phone_number:
+#         await ask_contact(chat_id, user.lang)
+#     elif not user.is_verified:
+#         await send_notify(chat_id, user.phone_number, user.lang)
+#     elif user.is_verified:
+#         await send_main_menu(user)
+#     else:
+#         await send_error(chat_id)
 
 
 
@@ -134,20 +137,21 @@ def check_user(chat_id, tg_user_id):
 
 def send_welcome(message):
     bot.send_message(message, const.WELCOME_MESSAGE, reply_markup=utils.get_buttons(const.LIST_LANG))
-
+    
 # register
 
-def ask_language(chat_id):
+def get_language(chat_id):
     bot.send_message(chat_id, const.ASK_LANGUAGE,
                      reply_markup=utils.get_buttons(const.LIST_LANG))
     UserState.language.set()
     # bot.set_state(FsmContext(state=UserState.language))
 
 
-def ask_contact(chat_id, lang):
-    bot.send_message(
+async def get_phone_number(chat_id, lang=const.UZBEK):
+    print("in phone number side")
+    await bot.send_message(
         chat_id, const.ASK_PHONE_NUMBER[lang], reply_markup=utils.get_phone_number_button(lang))    
-    bot.set_state(FsmContext(state=UserState.contact))
+    await bot.set_state()
 
 
 def send_notify(chat_id, phone_number, lang):

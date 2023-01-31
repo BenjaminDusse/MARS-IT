@@ -19,8 +19,8 @@ def get_phone_number(contact):
     return contact.phone_number[1:]
 
 
-def get_buttons(buttons, lang=None, n=2):
-    rkm = ReplyKeyboardMarkup(True, row_width=n)
+def get_buttons(buttons, lang=None, n=2, ):
+    rkm = ReplyKeyboardMarkup(True, row_width=n, resize_keyboard=True)
     if lang is None:
         rkm.add(*(KeyboardButton(btn) for btn in buttons))
     else:

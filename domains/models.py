@@ -17,14 +17,14 @@ class Contact(TimeStampedModel):
         (RU, 'ru'),
     )
 
-    tg_user_id = models.PositiveBigIntegerField(unique=True, null=True)
-    chat_id = models.PositiveBigIntegerField(unique=True, null=True)
+    tg_user_id = models.PositiveBigIntegerField(unique=True, null=True, blank=True)
+    chat_id = models.PositiveBigIntegerField(unique=True, null=True, blank=True)
     phone_number = models.CharField(max_length=25, null=True, blank=True)
     lang = models.CharField(max_length=3, choices=LANGUAGE_CHOICE, null=True, blank=True)
     is_verified = models.BooleanField(default=False)
     code = models.CharField(max_length=12, null=True, blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
-    contact_plan = models.OneToOneField('ContactPlan', on_delete=models.CASCADE, related_name='contact')
+    contact_plan = models.OneToOneField('ContactPlan', on_delete=models.CASCADE, related_name='contact', blank=True, null=True)
 
 
     def __str__(self):

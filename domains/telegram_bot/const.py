@@ -103,8 +103,8 @@ CURRENCY = {
 # Button namings:
 
 # language
-UZBEK = "O'zbek tili"
-RUSSIAN = "Русский"
+UZBEK = "🇺🇿 O'zbek tili"
+RUSSIAN = "🇷🇺 Русский"
 
 LIST_LANG = (UZBEK, RUSSIAN)
 

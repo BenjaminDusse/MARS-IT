@@ -1,42 +1,15 @@
 from django.db import models
-from django_extensions.db.models import TimeStampedModel
-from core.models import CustomUser
 from django.conf import settings
-
-UZ = "uz"
-RU = "ru"
-
-PHONE = "phone"
-TELEGRAM = "telegram"
-BOTH = "both"
-
-class Contact(TimeStampedModel):
-
-    LANGUAGE_CHOICE = (
-        (UZ, 'uz'),
-        (RU, 'ru'),
-    )
-
-    tg_user_id = models.PositiveBigIntegerField(unique=True, null=True, blank=True)
-    chat_id = models.PositiveBigIntegerField(unique=True, null=True, blank=True)
-    phone_number = models.CharField(max_length=25, null=True, blank=True)
-    lang = models.CharField(max_length=3, choices=LANGUAGE_CHOICE, null=True, blank=True)
-    is_verified = models.BooleanField(default=False)
-    code = models.CharField(max_length=12, null=True, blank=True)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
-    contact_plan = models.OneToOneField('ContactPlan', on_delete=models.CASCADE, related_name='contact', blank=True, null=True)
+from general.models import BaseModel
 
 
-    def __str__(self):
-        return self.user.get_username()
-
-
-class Domain(TimeStampedModel):
+class Domain(BaseModel):
     title = models.CharField(max_length=100)
-    contact = models.ForeignKey(Contact, on_delete=models.PROTECT, related_name='domain')
-    
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='domain')
 
-class ContactPlan(TimeStampedModel):
+
+class UserPlan(BaseModel):
     title = models.CharField(max_length=200)
     is_recommended = models.BooleanField(default=False)
     price = models.CharField(max_length=15)
@@ -44,11 +17,9 @@ class ContactPlan(TimeStampedModel):
 
     def __str__(self):
         return self.title
-    
-class ContactPlanFeature(TimeStampedModel):
+
+class UserPlanFeature(BaseModel):
     name = models.CharField(max_length=200)
+    user_plan = models.ForeignKey(UserPlan, on_delete=models.SET_NULL, null=True)
 
-
-class PaymentHistory(TimeStampedModel):
-    pass
 

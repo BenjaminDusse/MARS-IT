@@ -9,10 +9,10 @@ class Contact(BaseModel):
     tg_user_id = models.PositiveBigIntegerField(unique=True, null=True, blank=True)
     chat_id = models.PositiveBigIntegerField(unique=True, null=True, blank=True)
     lang = models.CharField(max_length=3, choices=Languages.choices, default=Languages.UZ)
-    user = models.OneToOneField('CustomUser', on_delete=models.CASCADE, related_name='contact')
+    user = models.OneToOneField('CustomUser', on_delete=models.CASCADE, related_name='contact', null=True, blank=True)
 
-    def __str__(self):
-        return self.user.get_username()
+    # def __str__(self):
+    #     return self.user.get_username()
 
 class CustomUser(AbstractUser):
     user_plan = models.OneToOneField('domains.UserPlan', on_delete=models.CASCADE, related_name='user_plan', null=True, blank=True)

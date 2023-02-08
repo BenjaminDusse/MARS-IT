@@ -4,6 +4,7 @@ from aiogram import types, Bot, Dispatcher, executor
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.builtin import CommandStart
 from aiogram.dispatcher import FSMContext
+from api import create_user
 
 
 def get_buttons(buttons, lang=None, n=2):
@@ -31,8 +32,12 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 @dp.message_handler(commands='start')
 async def on_start(message: types.Message):
     print("Working...")
-    await message.answer("Tillardan birini tanlang: ", reply_markup=get_buttons(LIST_LANG))
     print("In on start handler")
+    await message.answer("Tillardan birini tanlang: ", reply_markup=get_buttons(LIST_LANG))
+    print("Creating user")
+    create_user(message.from_user.username, message.from_user.first_name, )
+    print("User created")
+    
     await UserState.language.set()
 
 @dp.message_handler(commands='language', state=UserState.language)

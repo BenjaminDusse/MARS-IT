@@ -9,10 +9,10 @@ from rest_framework import permissions
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="5 SKILLS",
+        title="Domain Check Project",
         default_version='v1',
-        description="This core functionalities of all ZK projects",
-        contact=openapi.Contact(email="info@zk.uz")
+        description="This core functionalities of all by Benjamin Dusse",
+        contact=openapi.Contact(email="")
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),
@@ -20,7 +20,6 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
 
     path("", include("users.urls")),
     path('__debug__/', include('debug_toolbar.urls')),

@@ -1,9 +1,12 @@
 import random
 from django.core.management.base import BaseCommand, CommandError
 from django_seed import Seed
-from users.models import Contact
+from django.contrib.auth import get_user_model
+from users.models import CustomUser
 
-NAME = 'contacts'
+NAME = 'users'
+
+User = get_user_model()
 
 class Command(BaseCommand):
     help = 'This command creates {NAME}'
@@ -17,12 +20,11 @@ class Command(BaseCommand):
         number = options.get("number")
         seeder = Seed.seeder()
         seeder.add_entity(
-            Contact,
+            User,
             number,
             {
-                "tg_user_id": lambda x: random.randrange(100000000, 999999999),
-                "chat_id": lambda x: random.randrange(100000000, 999999999),
-                "user": lambda x: options.get("instance")
+                "is_staff": False,
+                "is_superuser": False
             },
         )
 

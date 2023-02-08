@@ -51,7 +51,7 @@ MAIN_MENU = {
     "ru": "Главное меню",
 }
 
-MAIN_MENU_KEYBOARD = ("1", "2", "3", "4", "5", "6", "7")
+MAIN_MENU_KEYBOARD = ("CHECK DOMAINS")
 
 # Settings:
 CHANGE_LANGUAGE = {

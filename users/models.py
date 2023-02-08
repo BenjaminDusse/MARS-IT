@@ -14,6 +14,8 @@ class Contact(BaseModel):
     phone_number = models.CharField(max_length=25, null=True, blank=True)
     user = models.OneToOneField('CustomUser', on_delete=models.CASCADE, related_name='contact', null=True, blank=True)
 
+    def __str__(self):
+        return self.user.get_full_name()
+
 class CustomUser(AbstractUser):
     pass
-

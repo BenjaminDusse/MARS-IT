@@ -4,7 +4,7 @@ from aiogram import types, Bot, Dispatcher, executor
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.builtin import CommandStart
 from aiogram.dispatcher import FSMContext
-from telegram_bot import const
+
 
 def get_buttons(buttons, lang=None, n=2):
     rkm = types.ReplyKeyboardMarkup(True, row_width=n, resize_keyboard=True)
@@ -40,9 +40,7 @@ async def on_language(message: types.Message, state: FSMContext):
     language = message.text
     print("In on language handler")
     if message.text == UZ:
-
-
-
+        pass
 
     await state.update_data(
         {

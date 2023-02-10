@@ -6,6 +6,6 @@ from users.models import Contact
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_contact_for_new_user(sender, **kwargs):
     print(kwargs)
-    Contact.objects.create(user=kwargs['instance'])
-
+    if kwargs['created']:
+        Contact.objects.create(user=kwargs['instance'])
 

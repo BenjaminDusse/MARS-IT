@@ -21,8 +21,6 @@ def check_user(username):
 
 def create_user(username, first_name, password, tg_user_id):
     url = f"{BASE_URL}/users/"
-    response = requests.get(url=url).text
-    # print(response)
     post_data = {
         'username': username, 
         'first_name': first_name, 

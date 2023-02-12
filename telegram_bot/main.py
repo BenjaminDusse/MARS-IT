@@ -7,6 +7,11 @@ from aiogram.dispatcher import FSMContext
 from api import create_user
 
 
+async def get_domains_info(message):
+    await message.answer("Nima gap tuzumisan? Karochi mana\
+        sanga polniy data")
+
+
 def get_buttons(buttons, lang=None, n=2):
     rkm = types.ReplyKeyboardMarkup(True, row_width=n, resize_keyboard=True)
     if lang is None:
@@ -70,9 +75,7 @@ async def on_language(message: types.Message, state: FSMContext):
 async def on_menu(message: types.Message, state: FSMContext):
     await message.answer("Asosiy menu")
     if message.text == DOMAINS:
-        await message.answer("Nima gap tuzumisan? Karochi mana\
-             sanga polniy data")
-    
+        await get_domains_info(message)
     await state.finish()
 
 if __name__=='__main__':

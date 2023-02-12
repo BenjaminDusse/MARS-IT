@@ -6,8 +6,7 @@ from general.models import BaseModel
 class Domain(BaseModel):
     title = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='domain')
-
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='domain')
 
 class UserPlan(BaseModel):
     title = models.CharField(max_length=200)
@@ -20,4 +19,13 @@ class UserPlan(BaseModel):
 
 class UserPlanFeature(BaseModel):
     name = models.CharField(max_length=200)
-    # user_plan = models.ForeignKey(UserPlan, on_delete=models.SET_NULL, null=True)
+    user_plan = models.ForeignKey(UserPlan, on_delete=models.SET_NULL, null=True)
+
+
+# register
+# telegram botdan api ga request jonatib userni create
+# get method func yozish
+# har kuni userni domainini vaqtini check qilib turish kerak.
+# celery da worker ni alohida run qilinadi
+# crontab ishlatish kere
+# 

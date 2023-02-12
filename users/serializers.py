@@ -7,7 +7,7 @@ class ContactSerializer(ModelSerializer):
 
     class Meta:
         model = Contact
-        fields = ['tg_user_id', 'chat_id', 'lang', 'first_name', 'last_name']
+        fields = ['tg_user_id', 'chat_id', 'lang']
 
     # def save(self, **kwargs):
     #     # print(self.validated_data.get('tg_user_id'))
@@ -25,9 +25,9 @@ class ContactSerializer(ModelSerializer):
         # return super().save(**kwargs)
 
 class CustomUserSerializer(ModelSerializer):
+    contact = ContactSerializer(read_only=True)
 
     class Meta:
         model = CustomUser
-        fields = ['user_plan', 'phone_number']
-
+        fields = ['phone_number', 'contact']
 

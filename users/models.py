@@ -18,4 +18,3 @@ class Contact(BaseModel):
 class CustomUser(AbstractUser):
     # user_plan = models.OneToOneField(UserPlan, on_delete=models.CASCADE, related_name='user_plan', null=True, blank=True)
     phone_number = models.CharField(max_length=25, null=True, blank=True)
-

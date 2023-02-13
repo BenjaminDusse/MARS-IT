@@ -35,19 +35,19 @@
 
 # Real Python
 
-import os
-# import crontab
+# import os
+# # import crontab
 
-from celery import Celery
+# from celery import Celery
 
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 
-app = Celery("config")
+# app = Celery("config")
 
-app.config_from_object("django.conf:settings", namespace="CELERY")
+# app.config_from_object("django.conf:settings", namespace="CELERY")
 
-app.autodiscover_tasks()
+# app.autodiscover_tasks()
 
 # app.conf.beat_schedule = {
 #     'every-day-parser': {

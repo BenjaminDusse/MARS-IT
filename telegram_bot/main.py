@@ -43,7 +43,7 @@ async def on_start(message: types.Message):
     print("In on start handler")
     await message.answer("Tillardan birini tanlang: ", reply_markup=get_buttons(LIST_LANG))
 
-    await UserState.language.set()  
+    await UserState.language.set()
 
 @dp.message_handler(state=UserState.language)
 async def on_language(message: types.Message, state: FSMContext):
@@ -60,10 +60,12 @@ async def on_language(message: types.Message, state: FSMContext):
         }
     )
 
-    # print("Creating user")
-    # create_user(message.from_user.username, message.from_user.first_name, message.from_user.id)
-    # print("User created")
+
     data = await state.get_data()
+    print("Creating user")
+    create_user(message.from_user.id, message.chat.id, lang=data['language'])
+    
+    print("User created")
     # every handler need get user for checking is authorized or no
     # here is need to write request code for creating new user
 

@@ -31,16 +31,12 @@
 
 # # celery -A config beat -l info # beat yani har kuni ishlab turishi uchun komanda
 
-# # app.conf.beat_schedule = {
-# #     'every-day-parser': {
-# #         'task': 'main.tasks.parse_every_day_posts',
-# #         'schedule': crontab(hour=1),
-# #     },
-# # }
+
 
 # Real Python
 
 import os
+# import crontab
 
 from celery import Celery
 
@@ -52,3 +48,10 @@ app = Celery("config")
 app.config_from_object("django.conf:settings", namespace="CELERY")
 
 app.autodiscover_tasks()
+
+# app.conf.beat_schedule = {
+#     'every-day-parser': {
+#         'task': 'main.tasks.parse_every_day_posts',
+#         'schedule': crontab(hour=24),
+#     },
+# }

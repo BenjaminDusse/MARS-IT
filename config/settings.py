@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django_seed",
     'rest_framework',
     'drf_yasg',
+    'django_crontab',
 
     "users",
     "domains",
@@ -144,9 +145,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CRONJOBS = [
+    ('*/5 * * * *', 'domains.cron.my_scheduled_job')
+]
+
+# CRONJOBS = [
+#     ('*/5 * * * *', 'myapp.cron.other_scheduled_job', ['arg1', 'arg2'], {'verbose': 0}),
+#     ('0   4 * * *', 'django.core.management.call_command', ['clearsessions']),
+# ]
+
 CELERY_TIMEZONE = "Tashkent/Uzbekistan"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
+

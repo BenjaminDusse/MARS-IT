@@ -18,7 +18,6 @@
 # app.autodiscover_tasks()
 
 
-
 # @app.task(bind=True) # func ga self argument ham keladi # 
 # def debug_task(self, domain: Domain):
 #     print(f'Request: {self.request!r}')
@@ -35,23 +34,25 @@
 
 # Real Python
 
-# import os
-# # import crontab
+import os
+from celery.schedules import crontab
+# import crontab
 
-# from celery import Celery
+from celery import Celery
 
 
-# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 
-# app = Celery("config")
+app = Celery("config")
 
-# app.config_from_object("django.conf:settings", namespace="CELERY")
+app.config_from_object("django.conf:settings", namespace="CELERY")
 
-# app.autodiscover_tasks()
+app.autodiscover_tasks()
 
-# app.conf.beat_schedule = {
-#     'every-day-parser': {
-#         'task': 'main.tasks.parse_every_day_posts',
-#         'schedule': crontab(hour=24),
-#     },
-# }
+app.conf.beat_schedule = {
+    'every-day-parser': {
+        'task': 'main.tasks.parse_every_day_posts',
+        'schedule': crontab(hour=23),
+    },
+}
+

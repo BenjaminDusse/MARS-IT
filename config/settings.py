@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-0g9&+@39(@4ci*5=a1(^n76i%md6c@zi7j3qr+plcoga5vpgz&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -154,10 +154,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     ('0   4 * * *', 'django.core.management.call_command', ['clearsessions']),
 # ]
 
-# CELERY_TIMEZONE = "Tashkent/Uzbekistan"
-# CELERY_TASK_TRACK_STARTED = True
-# CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_TIMEZONE = "Tashkent/Uzbekistan"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
 
-# CELERY_BROKER_URL = "redis://localhost:6379"
-# CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"
 

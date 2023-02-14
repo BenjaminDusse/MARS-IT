@@ -13,8 +13,8 @@ class Contact(BaseModel):
     tg_user_id = models.PositiveBigIntegerField(unique=True, null=True, blank=True)
     chat_id = models.PositiveBigIntegerField(unique=True, null=True, blank=True)
     lang = models.CharField(max_length=3, choices=Languages.choices, default=Languages.UZ)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='contact', null=True, blank=True)
 
 class CustomUser(AbstractUser):
     # user_plan = models.OneToOneField(UserPlan, on_delete=models.CASCADE, related_name='user_plan', null=True, blank=True)
     phone_number = models.CharField(max_length=25, null=True, blank=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='contact', blank=True)

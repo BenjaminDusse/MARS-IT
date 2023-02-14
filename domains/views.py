@@ -12,4 +12,4 @@ class UserPlanViewSet(viewsets.ModelViewSet):
     
     queryset = UserPlan.objects.all()
     serializer_class = UserPlanSerializer
-    
+

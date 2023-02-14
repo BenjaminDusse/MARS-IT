@@ -15,8 +15,7 @@ def create_user(tg_user_id, chat_id, lang='uz'):
     }
     headers = {
         "Accept": 'application/json',
-        "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/109.0",
-        
+        "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/109.0",  
     }
     
     response = requests.post(

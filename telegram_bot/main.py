@@ -20,12 +20,13 @@ def get_buttons(buttons, lang=None, n=2):
         rkm.add(*(types.KeyboardButton(btn[lang]) for btn in buttons))
     return rkm
 
-UZ = 'uz'
-EN = 'en'
-DOMAINS = 'Domains'
-MENU_BUTTONS = [DOMAINS]
+UZ = 'UZ'
+RU = 'RU'
 
-LIST_LANG = [UZ, EN]
+
+DOMAINS = 'Domains'
+LIST_LANG = [UZ, RU]
+MENU_BUTTONS = [DOMAINS]
 
 class UserState(StatesGroup):
 
@@ -47,23 +48,22 @@ async def on_start(message: types.Message):
 
 @dp.message_handler(state=UserState.language)
 async def on_language(message: types.Message, state: FSMContext):
-    language = message.text
     print("In on language handler")
     if message.text == UZ:
-        print("Uzbek")
-    if message.text == EN:
-        print("Russian")
+        print("Uzbek language chosen")
+    if message.text == RU:
+        print("Russian language chosen")
 
     await state.update_data(
         {
-            "language": language
+            "language": message.text
         }
     )
 
 
     data = await state.get_data()
     print("Creating user")
-    create_user(message.from_user.id, message.chat.id, lang=data['language'])
+    await create_user(message.from_user.id, message.chat.id, lang=data['language'])
     
     print("User created")
     # every handler need get user for checking is authorized or no
@@ -71,6 +71,7 @@ async def on_language(message: types.Message, state: FSMContext):
 
     await message.answer("Foydalanuvchi tili qabul qilindi!", reply_markup=get_buttons(MENU_BUTTONS))
     await UserState.next()
+
 
 
 @dp.message_handler(state=UserState.menu)

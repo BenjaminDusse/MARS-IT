@@ -7,7 +7,7 @@ class ContactSerializer(ModelSerializer):
 
     class Meta:
         model = Contact
-        fields = ['tg_user_id', 'chat_id', 'lang']
+        fields = ['tg_user_id', 'lang']
 
     # def save(self, **kwargs):
     #     # print(self.validated_data.get('tg_user_id'))

@@ -4,7 +4,7 @@ from aiogram import types, Bot, Dispatcher, executor
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.builtin import CommandStart
 from aiogram.dispatcher import FSMContext
-from api import create_user
+from api import create_user, get_user
 
 
 async def get_domains_info(message):
@@ -42,9 +42,15 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 async def on_start(message: types.Message):
     print("Working...")
     print("In on start handler")
-    await message.answer("Tillardan birini tanlang: ", reply_markup=get_buttons(LIST_LANG))
-
-    await UserState.language.set()
+    user = get_user(message.from_user.id)
+    print(f"Inside Telegram: {user}")
+    if user:
+        print(user)
+        await UserState.menu.set()
+    else:
+        await message.answer("Tillardan birini tanlang: ", reply_markup=get_buttons(LIST_LANG))
+        
+        await UserState.language.set()
 
 @dp.message_handler(state=UserState.language)
 async def on_language(message: types.Message, state: FSMContext):
@@ -63,8 +69,7 @@ async def on_language(message: types.Message, state: FSMContext):
 
     data = await state.get_data()
     print("Creating user")
-    await create_user(message.from_user.id, message.chat.id, lang=data['language'])
-    
+    await create_user(message.from_user.id, lang=data['language'])
     print("User created")
     # every handler need get user for checking is authorized or no
     # here is need to write request code for creating new user
@@ -72,15 +77,16 @@ async def on_language(message: types.Message, state: FSMContext):
     await message.answer("Foydalanuvchi tili qabul qilindi!", reply_markup=get_buttons(MENU_BUTTONS))
     await UserState.next()
 
-
-
 @dp.message_handler(state=UserState.menu)
 async def on_menu(message: types.Message, state: FSMContext):
-    await message.answer("Asosiy menu")
-    if message.text == DOMAINS:
-        await get_domains_info(message)
-    await state.finish()
+    user = get_user(message.from_user.id)
+    if user:
+        await message.answer("Asosiy menu")
+        if message.text == DOMAINS:
+            await get_domains_info(message)
+        await state.finish()
+    else:
+        await message.answer("User topilmadi")
 
 if __name__=='__main__':
     executor.start_polling(dp, skip_updates=True)
-

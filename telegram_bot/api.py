@@ -7,10 +7,9 @@ RU = 'RU', ('Russian')
 
 BASE_URL = 'http://127.0.0.1:8000'
 
-async def create_user(tg_user_id, chat_id, lang=UZ):
+async def create_user(chat_id, lang=UZ):
     # url ga ?tg_user_id laga qoshib jonatishim kerak :D
     data = {
-        'tg_user_id': tg_user_id,
         'chat_id': chat_id,
         'lang': lang
     }
@@ -18,13 +17,21 @@ async def create_user(tg_user_id, chat_id, lang=UZ):
         "Accept": 'application/json',
         "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/109.0",  
     }
-
     response = requests.post(
         url=f"{BASE_URL}/contacts/",
         json=data,
         headers=headers
     )
     print(response.text)
-    
+
     print(response.reason)
+
+def get_user(chat_id):
+
+    response = requests.get(
+        url=f"{BASE_URL}/contacts/{chat_id}/"
+    )
     
+    print("Getting user")
+    print(response.reason)
+

@@ -26,12 +26,9 @@ async def create_user(chat_id, lang=UZ):
 
     print(response.reason)
 
-def get_user(chat_id):
+async def get_user(chat_id):
 
     response = requests.get(
         url=f"{BASE_URL}/contacts/{chat_id}/"
     )
-    
     print("Getting user")
-    print(response.reason)
-

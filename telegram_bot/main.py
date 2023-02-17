@@ -42,10 +42,9 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 async def on_start(message: types.Message):
     print("Working...")
     print("In on start handler")
-    user = get_user(message.from_user.id)
-    print(f"Inside Telegram: {user}")
+    user = await get_user(message.chat.id)
     if user:
-        print(user)
+        print(f"Inside Telegram: {user}")
         await UserState.menu.set()
     else:
         await message.answer("Tillardan birini tanlang: ", reply_markup=get_buttons(LIST_LANG))
@@ -66,7 +65,6 @@ async def on_language(message: types.Message, state: FSMContext):
         }
     )
 
-
     data = await state.get_data()
     print("Creating user")
     await create_user(message.from_user.id, lang=data['language'])
@@ -77,9 +75,11 @@ async def on_language(message: types.Message, state: FSMContext):
     await message.answer("Foydalanuvchi tili qabul qilindi!", reply_markup=get_buttons(MENU_BUTTONS))
     await UserState.next()
 
+
+
 @dp.message_handler(state=UserState.menu)
 async def on_menu(message: types.Message, state: FSMContext):
-    user = get_user(message.from_user.id)
+    user = await get_user(message.from_user.id)
     if user:
         await message.answer("Asosiy menu")
         if message.text == DOMAINS:

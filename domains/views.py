@@ -7,9 +7,4 @@ class DomainViewSet(viewsets.ModelViewSet):
     
     queryset = Domain.objects.all()
     serializer_class = DomainSerializer
-    
-class UserPlanViewSet(viewsets.ModelViewSet):
-    
-    queryset = UserPlan.objects.all()
-    serializer_class = UserPlanSerializer
 

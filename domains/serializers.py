@@ -7,16 +7,3 @@ class DomainSerializer(ModelSerializer):
         model = Domain
         fields = ['title', 'price', 'user']
 
-class UserPlanFeature(ModelSerializer):
-    
-    class Meta:
-        model = UserPlanFeature
-        fields = ['name', 'user_plan']
-        
-class UserPlanSerializer(ModelSerializer):
-    features = UserPlanFeature(many=True)
-    
-    class Meta:
-        model = UserPlan
-        fields = ['title', 'price', 'discount', 'is_recommended', 'features']
-        

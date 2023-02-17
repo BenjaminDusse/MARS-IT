@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     "django_seed",
     'rest_framework',
     'drf_yasg',
-    # 'django_crontab',
+    'django_crontab',
+    
 
     "users",
     "domains",

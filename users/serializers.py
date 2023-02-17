@@ -1,13 +1,20 @@
 from django.db import transaction
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
-from users.models import Contact, CustomUser
+from users.models import Contact, CustomUser, UserPlan, UserPlanFeature
 
-class ContactSerializer(ModelSerializer):  
+class ContactCreateSerializer(ModelSerializer):
 
     class Meta:
         model = Contact
-        fields = ['tg_user_id', 'lang']
+        fields = ['chat_id', 'lang']
+
+class ContactSerializer(ModelSerializer):
+    
+    class Meta:
+        model = Contact
+        fields = ['chat_id']
+
 
     # def save(self, **kwargs):
     #     # print(self.validated_data.get('tg_user_id'))
@@ -16,7 +23,6 @@ class ContactSerializer(ModelSerializer):
     #         tg_user_id = self.validated_data.get('tg_user_id')
     #         chat_id = self.validated_data.get('chat_id')
     #         lang = self.validated_data.get('lang')
-
 
 
     #         (contact, created) = Contact.objects.get_or_create(tg_user_id=self.context.get('tg_user_id'))
@@ -30,4 +36,20 @@ class CustomUserSerializer(ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['phone_number', 'contact']
+
+
+
+class UserPlanFeature(ModelSerializer):
+    
+    class Meta:
+        model = UserPlanFeature
+        fields = ['name', 'user_plan']
+
+
+class UserPlanSerializer(ModelSerializer):
+    features = UserPlanFeature(many=True, read_only=True)
+    
+    class Meta:
+        model = UserPlan
+        fields = ['title', 'price', 'discount', 'is_recommended', 'features']
 

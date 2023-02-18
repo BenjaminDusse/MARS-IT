@@ -13,7 +13,7 @@ class ContactSerializer(ModelSerializer):
     
     class Meta:
         model = Contact
-        fields = ['chat_id']
+        fields = ['chat_id', 'lang']
 
 
     # def save(self, **kwargs):
@@ -30,15 +30,6 @@ class ContactSerializer(ModelSerializer):
     #         CustomUser.objects.bulk_create(contact)
         # return super().save(**kwargs)
 
-class CustomUserSerializer(ModelSerializer):
-    contact = ContactSerializer(read_only=True)
-
-    class Meta:
-        model = CustomUser
-        fields = ['phone_number', 'contact']
-
-
-
 class UserPlanFeature(ModelSerializer):
     
     class Meta:
@@ -51,5 +42,12 @@ class UserPlanSerializer(ModelSerializer):
     
     class Meta:
         model = UserPlan
-        fields = ['title', 'price', 'discount', 'is_recommended', 'features']
+        fields = ['id', 'title', 'price', 'discount', 'is_recommended', 'features']
 
+
+class CustomUserSerializer(ModelSerializer):
+    user_plan = UserPlanSerializer
+    
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password', 'user_plan']

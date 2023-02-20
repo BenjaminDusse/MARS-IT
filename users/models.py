@@ -13,7 +13,7 @@ class Contact(BaseModel):
     lang = models.CharField(max_length=3, choices=Languages.choices, default=Languages.UZ)
 
 class CustomUser(AbstractUser):
-    user_plan = models.ForeignKey('UserPlan', on_delete=models.CASCADE, related_name='user')
+    user_plan = models.ForeignKey('UserPlan', on_delete=models.CASCADE, related_name='user', null=True, blank=True)
     phone_number = models.CharField(max_length=25, null=True, blank=True)
     contact = models.OneToOneField(Contact, on_delete=models.PROTECT, related_name='user', null=True, blank=True)
 

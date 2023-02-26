@@ -51,3 +51,14 @@ class CustomUserSerializer(ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['username', 'password', 'user_plan']
+
+    def create(self, validated_data):
+        chat_id = self.context['request'].chat_id
+    
+        try:
+            Contact.objects.create(chat_id=chat_id)
+        except Exception as e:
+            print(f"Error occurs: { e }")
+        return super().create(validated_data)
+
+

@@ -31,4 +31,3 @@ class UserPlanFeature(BaseModel):
     name = models.CharField(max_length=200)
     user_plan = models.ForeignKey(UserPlan, on_delete=models.SET_NULL, null=True, blank=True)
 
-
